@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block title %}我的书库 - 听书网{% endblock %}
+
+{% block content %}
+<div class="library-container">
+    <div class="library-header">
+        <h2>我的书库</h2>
+        <a href="{{ url_for('book.upload') }}" class="btn btn-primary">上传新书</a>
+    </div>
+    
+    <div class="book-section">
+        <h3>我的书籍</h3>
+        {% if user_books %}
+            <div class="book-grid">
+                {% for book in user_books %}
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <span class="file-type">{{ book.file_type }}</span>
+                        </div>
+                        <div class="book-info">
+                            <h4>{{ book.title }}</h4>
+                            <p class="author">{{ book.author }}</p>
+                            <p class="date">上传于: {{ book.created_at.strftime('%Y-%m-%d') }}</p>
+                            <div class="book-actions">
+                                <a href="{{ url_for('book.read', book_id=book.id) }}" class="btn btn-sm btn-primary">阅读</a>
+                                {% if book.is_public %}
+                                    <span class="badge badge-success">已分享</span>
+                                {% else %}
+                                    <span class="badge badge-secondary">私有</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-books">您还没有上传任何书籍。<a href="{{ url_for('book.upload') }}">立即上传</a></p>
+        {% endif %}
+    </div>
+    
+    <div class="book-section">
+        <h3>公开书籍</h3>
+        {% if public_books %}
+            <div class="book-grid">
+                {% for book in public_books %}
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <span class="file-type">{{ book.file_type }}</span>
+                        </div>
+                        <div class="book-info">
+                            <h4>{{ book.title }}</h4>
+                            <p class="author">{{ book.author }}</p>
+                            <p class="owner">分享者: {{ book.owner.username }}</p>
+                            <div class="book-actions">
+                                <a href="{{ url_for('book.read', book_id=book.id) }}" class="btn btn-sm btn-primary">阅读</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-books">暂无公开书籍。</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

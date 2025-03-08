@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}阅读 - {{ book.title }}{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reader.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="reader-container" id="book-container" data-book-id="{{ book.id }}" data-progress="{{ progress.position }}">
+    <div class="reader-header">
+        <h2>{{ book.title }}</h2>
+        <div class="author">作者: {{ book.author }}</div>
+    </div>
+    
+    <div class="reader-controls">
+        <div class="voice-control">
+            <label for="voice-selector">语音:</label>
+            <select id="voice-selector" class="form-control">
+                <option value="">加载中...</option>
+            </select>
+            
+            <div class="voice-settings">
+                <label for="rate-control">语速:</label>
+                <input type="range" id="rate-control" min="0.5" max="2" step="0.1" value="1">
+                <span id="rate-value">1.0</span>
+                
+                <label for="pitch-control">音调:</label>
+                <input type="range" id="pitch-control" min="0.5" max="2" step="0.1" value="1">
+                <span id="pitch-value">1.0</span>
+            </div>
+        </div>
+        
+        <div class="playback-controls">
+            <button id="play-button" class="btn btn-primary"><span class="icon-play"></span> 朗读</button>
+            <button id="pause-button" class="btn btn-secondary" style="display: none;"><span class="icon-pause"></span> 暂停</button>
+        </div>
+    </div>
+    
+    <!-- 分页控件将通过JavaScript动态添加 -->
+    
+    <div class="progress-container">
+        <progress id="progress-bar" value="{{ progress.position * 100 }}" max="100"></progress>
+    </div>
+    
+    <div class="book-content">
+        <div class="reading-tip">点击任意段落或句子开始朗读</div>
+        <div id="text-container" class="text-content">
+            <p class="loading">正在加载内容...</p>
+        </div>
+    </div>
+    
+    <div class="reader-footer">
+        <a href="{{ url_for('book.library') }}" class="btn btn-outline-secondary">返回书库</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/reader.js') }}"></script>
+{% endblock %} 

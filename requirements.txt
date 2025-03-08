@@ -1,0 +1,8 @@
+Flask==2.2.3
+Flask-SQLAlchemy==3.0.3
+Werkzeug==2.2.3
+PyPDF2==3.0.1
+python-docx==0.8.11
+ebooklib==0.17.1
+beautifulsoup4==4.12.2
+azure-cognitiveservices-speech==1.28.0 

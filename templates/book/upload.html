@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}上传书籍 - 听书网{% endblock %}
+
+{% block content %}
+<div class="upload-container">
+    <h2>上传新书</h2>
+    <form method="post" action="{{ url_for('book.upload') }}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file">选择文件</label>
+            <input type="file" id="file" name="file" accept=".pdf,.epub,.docx,.txt" required>
+            <small class="form-text">支持的格式: PDF, EPUB, DOCX, TXT (最大50MB)</small>
+        </div>
+        <div class="form-group">
+            <label for="title">书名</label>
+            <input type="text" id="title" name="title" placeholder="留空将使用文件名">
+        </div>
+        <div class="form-group">
+            <label for="author">作者</label>
+            <input type="text" id="author" name="author" placeholder="未知">
+        </div>
+        <div class="form-group checkbox">
+            <input type="checkbox" id="is_public" name="is_public">
+            <label for="is_public">公开分享此书籍</label>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">上传</button>
+            <a href="{{ url_for('book.library') }}" class="btn btn-secondary">取消</a>
+        </div>
+    </form>
+</div>
+{% endblock %} 
